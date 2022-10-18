@@ -1,30 +1,64 @@
 import React, { useState } from 'react';
 import { Button, Modal, FormControl } from 'react-bootstrap';
 
-const EditProduct = () => {
+const EditProduct = ({ editProduct, showEditModal, handleEditClose, handleSave }) => {
+    const [product, setProduct] = useState(editProduct);
+
+    const editTitle = (e) => {
+        setProduct({
+            ...product,
+            title: e.target.value
+        });
+    };
+
+    const editDesc = (e) => {
+        setProduct({
+            ...product,
+            desc: e.target.value
+        });
+    };
+
+    const editPrice = (e) => {
+        setProduct({
+            ...product,
+            price: e.target.value
+        });
+    };
+
+    const editImage = (e) => {
+        setProduct({
+            ...product,
+            image: e.target.value
+        });
+    };
+
+    function saveChanges(){
+        handleSave(product);
+    };
+
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={showEditModal} onHide={handleEditClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Product</Modal.Title>
+          <Modal.Title>Change Product</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <div className="form">
-                <FormControl size="lg" className="my-3" placeholder="Title" value={title} onChange={e => setTitle(e.target.value)} />
+                <FormControl size="lg" className="my-3" placeholder="Title" value={product.title} onChange={editTitle} />
 
-                <FormControl size="lg" className="my-3" placeholder="Description" value={desc} onChange={e => setDesc(e.target.value)} />
+                <FormControl size="lg" className="my-3" placeholder="Description" value={product.desc} onChange={editDesc} />
 
-                <FormControl size="lg" className="my-3" placeholder="Price" value={price} onChange={e => setPrice(e.target.value)} />
+                <FormControl size="lg" className="my-3" placeholder="Price" value={product.price} onChange={editPrice} />
 
-                <FormControl size="lg" className="my-3" placeholder="Image" value={image} onChange={e => setImage(e.target.value)} />
+                <FormControl size="lg" className="my-3" placeholder="Image" value={product.image} onChange={editImage} />
             </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleEditClose}>
             Close
           </Button>
-          <Button variant="dark" onClick={createProduct}>
-            Add
+          <Button variant="dark" onClick={saveChanges}>
+            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
